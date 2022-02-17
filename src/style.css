@@ -1,0 +1,14 @@
+.main{
+    height: 100vh;
+    background-color: rgb(64, 189, 60);
+    overflow: hidden;
+    position: relative;
+}
+.container{
+    width: 500px;
+    height: 500px;
+    position: absolute;
+    top: 250px;
+    left: 250px;
+    background-color: rgb(65, 42, 165);
+}
