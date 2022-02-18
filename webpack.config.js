@@ -34,7 +34,39 @@ module.exports = {
                 plugins: ['@babel/plugin-proposal-object-rest-spread']
               }
             }
-          }
+          },
+          // изображения
+          {
+            test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
+            use: [
+              {
+                loader: 'file-loader',
+              },
+            ],
+          },
+          {
+            test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
+            type: 'asset/inline',
+          },
+          {
+            test : /\.(svg)$/,
+            use: [
+                {
+                    loader: "@svgr/webpack"
+                }
+            ]
+         },
+         {
+          test: /\.(png|jpg|gif)$/i,
+          use: [
+            {
+              loader: 'url-loader',
+              options: {
+                limit: 8192,
+              },
+            },
+          ],
+        },
         ],
     },
 }
