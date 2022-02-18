@@ -20,6 +20,11 @@ module.exports = {
     ],
     module: {
         rules: [
+          // html
+          {
+            test: /\.html$/i,
+            loader: "html-loader",
+          },
           {
             test: /\.css$/i,
             use: ["style-loader", "css-loader"],
@@ -35,38 +40,23 @@ module.exports = {
               }
             }
           },
-          // изображения
+          // images
           {
-            test: /\.(?:ico|gif|png|jpg|jpeg)$/i,
+            test: /\.(png|svg|jpg|jpeg|gif)$/i,
+            type: 'asset/resource',
+          },
+          // URL
+          {
+            test: /\.(png|jpg|gif)$/i,
             use: [
               {
-                loader: 'file-loader',
+                loader: 'url-loader',
+                options: {
+                  limit: 8192,
+                },
               },
             ],
           },
-          {
-            test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
-            type: 'asset/inline',
-          },
-          {
-            test : /\.(svg)$/,
-            use: [
-                {
-                    loader: "@svgr/webpack"
-                }
-            ]
-         },
-         {
-          test: /\.(png|jpg|gif)$/i,
-          use: [
-            {
-              loader: 'url-loader',
-              options: {
-                limit: 8192,
-              },
-            },
-          ],
-        },
         ],
     },
 }

@@ -1,4 +1,5 @@
 import styles from "./style.css";
+import Star from './star.svg';
 
 
 function createfonImages() {
@@ -48,7 +49,7 @@ function createFlag() {
 createFlag();
 let flag = document.querySelector('.flag');
 
-flag.src = 'http://lider-minsk.by/uploads/images/%D0%92%D0%BE%D1%81%D0%BF_%D0%BF%D1%80%D0%BE%D1%86%D0%B5%D1%81%D1%81/%D0%95%D0%94%D0%98/%D0%A4%D0%BB%D0%B0%D0%B3.jpg';
+flag.src = 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/94/Webpack.svg/1200px-Webpack.svg.png';
 
 function createBtnsContainer() {
     let btnsContainer = document.createElement('div');
@@ -80,10 +81,11 @@ createScoreContainer();
 let scoreContainer = document.querySelector('.score__container'); 
 
 function createStarImg() {
-    let star = document.createElement('img');
+    // let star = document.createElement('img');
+    let star = new Image();
     star.classList.add('star');
     star.alt = 'star';
-    star.src = '../star.svg'
+    star.src = Star;
     scoreContainer.append(star);
 }
 createStarImg();
