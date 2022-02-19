@@ -125,6 +125,21 @@ createPoints();
 let playerPoints = document.querySelector('#playerPoints');
 playerPoints.innerText = 10;
 
+function createTimerContainer() {
+    let timerContainer = document.createElement('div');
+    timerContainer.classList.add('timer__container');
+    wrapper.append(timerContainer);
+
+    let timerSlider = document.createElement('div');
+    timerSlider.classList.add('timer__slider');
+    timerContainer.append(timerSlider);
+}
+createTimerContainer();
+let timer = document.querySelector('.timer__slider');
+
+
+
+
 function createMessage() {
     let message = document.createElement('div');
     message.classList.add('message');
@@ -178,44 +193,52 @@ function game() {
         randomLand1 = json[numLandRandom1];
         randomLand2 = json[numLandRandom2];
         randomLand3 = json[numLandRandom3];
-        
-        if(landResult.media.flag) {
-            flag.src = landResult.media.flag;
-        } else {
-            game();
-        }
-        
-        setBtnsValues()
 
-        function setBtnsValues() {
-            let arr = [btn1, btn2, btn3, btn4];
-            let random = getRandomIntInclusive(0, 3);
-            arr[random].innerHTML = landResult.name;
-            arr.splice(random, 1);
-            arr[0].innerHTML = randomLand1.name;
-            arr[1].innerHTML = randomLand2.name;
-            arr[2].innerHTML = randomLand3.name;
+        console.log(landResult.name);
+        console.log(landResult);
+            
+        flag.src = landResult.media.flag;
+        
+        if (landResult.media.flag === '') {
+            searchLands();
         }
 
-        btns.forEach(elem => {
-            elem.addEventListener('click', checkAnswer);
-        });
-    })
+        flag.onload = ()=> {
+            setBtnsValues();
+            startTimer();
+
+            btns.forEach(elem => {
+                elem.addEventListener('click', checkAnswer);
+            });
+        }
+    });
 }
 
+function setBtnsValues() {
+    let arr = [btn1, btn2, btn3, btn4];
+    let random = getRandomIntInclusive(0, 3);
+    arr[random].innerHTML = landResult.name;
+    arr.splice(random, 1);
+    arr[0].innerHTML = randomLand1.name;
+    arr[1].innerHTML = randomLand2.name;
+    arr[2].innerHTML = randomLand3.name;
+}
 
 function checkAnswer() {
+    clearInterval(timerGo);
+    timer.style.width;
+
     if (this.innerHTML === landResult.name) {
+        morePoints();
 
         btns.forEach(elem => {
             elem.removeEventListener('click', checkAnswer);
         });
         
         this.style.backgroundColor = '#02705C';
+
         setTimeout(()=> {
-            message.style.backgroundColor = '#02705C';
-            message.innerHTML = 'Right';
-            message.style.display = 'flex';
+            showMessage('#02705C', 'Right', 'flex');
 
             setTimeout(()=> {
                 message.style.display = 'none';
@@ -223,6 +246,8 @@ function checkAnswer() {
             },1000);
         },500);
     } else {
+        lessPoinnts();
+
         btns.forEach(elem => {
             elem.removeEventListener('click', checkAnswer);
         });
@@ -236,9 +261,7 @@ function checkAnswer() {
         });
 
         setTimeout(()=> {
-            message.style.backgroundColor = '#A30312';
-            message.innerHTML = 'Wrong';
-            message.style.display = 'flex';
+            showMessage('#A30312', 'Wrong', 'flex');
 
             setTimeout(()=> {
                 message.style.display = 'none';
@@ -273,8 +296,9 @@ function showLandsInfo() {
         let num = editNumPeople();
         infoPopulation.innerHTML = `Population: ${num} people`;
     }
-    wrapper.addEventListener('click', startNewGame);
-}
+    showResultMessage();
+    }
+
 function editNumPeople() {
     let num = landResult.population;
     num += "";
@@ -300,10 +324,14 @@ function showInfoBox() {
     btnsContainer.style.border = '10px solid white';
     btnsContainer.style.boxSizing = "border-box";
     landInfoBox.style.display = 'flex';
+
+    btns.forEach(elem => {
+        elem.innerHTML = '';
+    })
 }
 
 function hiddenInfoBox() {
-    btnsContainer.style.backgroundColor = 'none';
+    btnsContainer.style.backgroundColor = '#11ffee00';
     btnsContainer.style.borderRadius = '20px';
     btnsContainer.style.border = 'none';
     btnsContainer.style.boxSizing = "content-box";
@@ -314,7 +342,78 @@ function hiddenInfoBox() {
         elem.style.backgroundColor = '#4F5C88';
     });
 }
+
 function startNewGame() {
+    cleanResult();
     hiddenInfoBox();
     game();
+}
+
+function morePoints() {
+    let num = +playerPoints.innerHTML + 1;
+    playerPoints.innerHTML = num + '';
+}
+
+function lessPoinnts() {
+    let num = +playerPoints.innerHTML - 1;
+    playerPoints.innerHTML = num + '';
+}
+
+function showResultMessage() {
+    let num = +playerPoints.innerHTML;
+    clearInterval(timerGo);
+    if (num === 20) {
+        showMessage('#02705C', 'You Win!', 'flex');
+    }
+    if (num === 0) {
+        showMessage('#A30312', 'You Lose!', 'flex');
+    }
+    
+    wrapper.addEventListener('click', startNewGame);
+}
+
+function showMessage(color, text, view) {
+    message.style.backgroundColor = color;
+    message.innerHTML = text;
+    message.style.display = view;
+}
+
+function cleanResult() {
+    if (message.innerHTML === 'You Lose!' || message.innerHTML === 'You Win!') {
+        message.innerHTML = "";
+        message.style.display = 'none';
+        playerPoints.innerHTML = '10';
+    }
+}
+// ---------------------------------------------- Timer ----------------------------------------------
+
+function startTimer() {
+    timer.style.width = '100%';
+    reductionTimer();
+}
+
+let timerGo;
+
+function reductionTimer() {
+    let num = parseInt (timer.style.width);
+    let percentNum = num /200;
+    timerGo = setInterval(start, 50);
+
+    function start() {
+        
+        num = num - percentNum;
+        timer.style.width = `${num}%`;
+        
+        if (num <= 0.15) {
+            timer.style.width = `0%`;
+            clearInterval(timerGo);
+            showMessage('#A30312', 'You Lose!', 'flex');
+
+            btns.forEach(elem => {
+                elem.removeEventListener('click', checkAnswer);
+            });
+            wrapper.addEventListener('click', startNewGame);
+
+        }
+    }
 }

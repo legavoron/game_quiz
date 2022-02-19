@@ -98,8 +98,8 @@ html, body{
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    text-decoration: none;
     word-break: break-word;
+    text-align: center;
     /* display: none; */
 }
 .btn:active {
@@ -143,6 +143,21 @@ html, body{
     align-items: center;
     justify-content: center;
 }
+.timer__container{
+    position: absolute;
+    left: 3vh;
+    top: 15vh;
+    width: 15vw;
+    height: 5vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.timer__slider{
+    width: 100%;
+    height: 100%;
+    background-color: #02705C;
+}
 .star{
     width: 25%;
 }
@@ -170,6 +185,7 @@ html, body{
     background-color: #02705C;
     display: none;
 }
+
 @media(max-width:1000px) {
     .container__box{
         width: 100%;
@@ -201,33 +217,15 @@ html, body{
     .message{
         font-size: 16vw;
     }
-}
-@media only screen and (max-device-height: 480px) {
-    
-    .container{
-        height: 55vh;
-        margin-bottom: 2vh;
-    }
-    .flag__box{
-        height: 80%;
-        width: 50%;
-    }
-    .star{
-        height: 90%;
-    }
-    .player__Points{
-        font-size: 6vh;
-    }
-    .btns__container{
-       height: 25vh;
-    }
-    .btn{
-        font-size: 4vw;
-        height: 40%;
-        margin: 0.2rem;
-    }
-    .message{
-        font-size: 8vw;
+    .timer__container{
+        top: 3vh;
+        left: 27vh;
+        width: 30vw;
+        height: 7vh;
     }
 }
-
+@media (max-width: 500px) {
+    .timer__container{
+        width: 40vw;
+    }
+}
