@@ -193,7 +193,7 @@ html, body{
         margin-top: 13vh;
     }
     .flag__box{
-        height: 60%;
+        height: 50%;
     }
     .score__container{
         width: 30vw;
@@ -207,11 +207,11 @@ html, body{
     }
     .btn{
         padding: 5px;
-        font-size: 40px;
+        font-size: 5vw;
         height: 38%;
     }
     .message{
-        font-size: 8vw;
+        font-size: 10vw;
     }
     .timer__container{
         top: 3vh;
@@ -220,13 +220,36 @@ html, body{
         width: 30vw;
         height: 7vh;
     }
+    .star{
+        height: 60%;
+    }
 }
 
 
 /* --------------------------------------------------  Mobile Horizontal -------------------------*/
 
-@media(max-height: 500px) {
+@media(max-height:500px) {
     .btn{
-        font-size: 30px;
+        font-size: 2vw;
+    }
+    .flag__box{
+        height: 80%;
+        width: 35%;
+    }
+    .score__container{
+        width: 12vw;
+        height: 7vh;
+    }
+    .player__Points{
+        font-size: 1.5vw;
+    }
+    .container{
+        margin-bottom: 5px;
+    }
+    .message{
+        font-size: 8vw;
+    }
+    .land_info_box_container{
+        font-size: 6vh;
     }
 }
