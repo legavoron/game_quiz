@@ -137,9 +137,6 @@ function createTimerContainer() {
 createTimerContainer();
 let timer = document.querySelector('.timer__slider');
 
-
-
-
 function createMessage() {
     let message = document.createElement('div');
     message.classList.add('message');
@@ -163,7 +160,7 @@ function game() {
     
     let fetchInfo = fetch('https://api.sampleapis.com/countries/countries')
     .then(response => response.json())
-    .then(json => {
+    .then(landObj => {
         
         let numLandResult = '';
         let numLandRandom1 = '';
@@ -173,10 +170,10 @@ function game() {
         searchLands();
 
         function searchLands() {
-            numLandResult = getRandomIntInclusive(1, json.length);
-            numLandRandom1 = getRandomIntInclusive(1, json.length);
-            numLandRandom2 = getRandomIntInclusive(1, json.length);
-            numLandRandom3 = getRandomIntInclusive(1, json.length);
+            numLandResult = getRandomIntInclusive(1, landObj.length -1);
+            numLandRandom1 = getRandomIntInclusive(1, landObj.length -1);
+            numLandRandom2 = getRandomIntInclusive(1, landObj.length -1);
+            numLandRandom3 = getRandomIntInclusive(1, landObj.length -1);
 
             if (numLandResult === numLandRandom1 || numLandResult === numLandRandom2 || numLandResult === numLandRandom3) {
                 searchLands();
@@ -189,29 +186,47 @@ function game() {
             }
         }
 
-        landResult = json[numLandResult];
-        randomLand1 = json[numLandRandom1];
-        randomLand2 = json[numLandRandom2];
-        randomLand3 = json[numLandRandom3];
+        landResult = landObj[numLandResult];
+        randomLand1 = landObj[numLandRandom1];
+        randomLand2 = landObj[numLandRandom2];
+        randomLand3 = landObj[numLandRandom3];
 
         console.log(landResult.name);
         console.log(landResult);
             
         flag.src = landResult.media.flag;
         
-        if (landResult.media.flag === '') {
-            searchLands();
-        }
-
-        flag.onload = ()=> {
-            setBtnsValues();
-            startTimer();
-
-            btns.forEach(elem => {
-                elem.addEventListener('click', checkAnswer);
-            });
-        }
+        checkFlagLoad(landObj, numLandRandom1, numLandRandom2, numLandRandom3);
     });
+}
+
+function checkFlagLoad(landObj, numLandRandom1, numLandRandom2, numLandRandom3) {
+    flag.onload = ()=> {
+    setBtnsValues();
+    startTimer();
+
+    btns.forEach(elem => {
+        elem.addEventListener('click', checkAnswer);
+    });
+    }
+
+    flag.onerror = ()=> {
+        let num = getRandomIntInclusive(1, landObj.length -1);
+        
+        if (num === numLandRandom1 || num === numLandRandom2 || num === numLandRandom3) {
+            checkFlagLoad(landObj, numLandRandom1, numLandRandom2, numLandRandom3);
+        }
+        if (numLandRandom1 === numLandRandom2 || numLandRandom1 === numLandRandom3) {
+            checkFlagLoad(landObj, numLandRandom1, numLandRandom2, numLandRandom3);
+        }
+        if (numLandRandom2 === numLandRandom3) {
+            checkFlagLoad(landObj, numLandRandom1, numLandRandom2, numLandRandom3);
+        }
+
+        landResult = landObj[num];
+        flag.src = landResult.media.flag;
+        checkFlagLoad(landObj, numLandRandom1, numLandRandom2, numLandRandom3);
+    }
 }
 
 function setBtnsValues() {

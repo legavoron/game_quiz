@@ -5,19 +5,14 @@ html, body{
     font-family: 'Arima Madurai', cursive;
     font-family: 'Comfortaa', cursive;
     font-family: 'Glory', sans-serif;
-    font-family: 'IBM Plex Sans Thai', sans-serif;
-    font-family: 'Lato', sans-serif;
-    font-family: 'Manjari', sans-serif;
     font-family: 'Marck Script', cursive;
     font-family: 'Montserrat', sans-serif;
-    font-family: 'Mukta', sans-serif;
     font-family: 'Noto Sans', sans-serif;
     font-family: 'Noto Sans Mono', monospace;
     font-family: 'Open Sans', sans-serif;
     font-family: 'Orelega One', cursive;
     font-family: 'Press Start 2P', cursive;
     font-family: 'PT Sans', sans-serif;
-    font-family: 'Rubik Beastly', cursive;
 }
 .wrapper{
     width: 100vw;
@@ -130,6 +125,7 @@ html, body{
     z-index: 3;
     background-color: #BDD4F2;
     font-size: 3vh;
+    text-align: center;
 }
 .score__container{
     position: absolute;
@@ -159,7 +155,7 @@ html, body{
     background-color: #02705C;
 }
 .star{
-    width: 25%;
+    height: 80%;
 }
 .player__Points{
     width: 30%;
@@ -197,7 +193,7 @@ html, body{
         margin-top: 13vh;
     }
     .flag__box{
-        height: 50%;
+        height: 60%;
     }
     .score__container{
         width: 30vw;
@@ -211,21 +207,26 @@ html, body{
     }
     .btn{
         padding: 5px;
-        font-size: 5vw;
+        font-size: 40px;
         height: 38%;
     }
     .message{
-        font-size: 16vw;
+        font-size: 8vw;
     }
     .timer__container{
         top: 3vh;
-        left: 27vh;
+        left: auto;
+        right: 3vh;
         width: 30vw;
         height: 7vh;
     }
 }
-@media (max-width: 500px) {
-    .timer__container{
-        width: 40vw;
+
+
+/* --------------------------------------------------  Mobile Horizontal -------------------------*/
+
+@media(max-height: 500px) {
+    .btn{
+        font-size: 30px;
     }
 }
