@@ -325,10 +325,7 @@ function editNumPeople() {
         num.splice(-7, 0, " ");
     }
     if (num.length > 10) {
-        num.splice(-10, 0, " ");
-    }
-    if (num.length > 13) {
-        num.splice(-13, 0, " ");
+        num.splice(-11, 0, " ");
     }
     return num.join('');
 }
